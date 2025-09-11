@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "removeComments": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "ES2021",
+    "sourceMap": true,
+    "outDir": "./dist",
+    "baseUrl": "./",
+    "incremental": true,
+    "skipLibCheck": true,
+    "strictNullChecks": false,
+    "noImplicitAny": false,
+    "strictBindCallApply": false,
+    "forceConsistentCasingInFileNames": false,
+    "noFallthroughCasesInSwitch": false,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "typeRoots": ["./@types", "./node_modules/@types"],
+    "paths": {
+      "@app/*": ["src/*"],
+      "@lib/common": ["libs/common/src"],
+      "@lib/common/*": ["libs/common/src/*"],
+      "@lib/config": ["libs/config/src"],
+      "@lib/config/*": ["libs/config/src/*"],
+      "@lib/utils": ["libs/utils/src"],
+      "@lib/utils/*": ["libs/utils/src/*"],
+      "@lib/ajv": ["libs/ajv/src"],
+      "@lib/ajv/*": ["libs/ajv/src/*"],
+      "@lib/core": ["libs/core/src"],
+      "@lib/core/*": ["libs/core/src/*"],
+      "@lib/providers": ["libs/providers/src"],
+      "@lib/providers/*": ["libs/providers/src/*"],
+      "@lib/db": ["libs/db/src"],
+      "@lib/db/*": ["libs/db/src/*"]
+    }
+  },
+  "ts-node": {
+    "files": true,
+    "require": ["tsconfig-paths/register"]
+  }
+}

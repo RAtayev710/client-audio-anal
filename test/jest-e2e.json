@@ -1,0 +1,29 @@
+{
+  "moduleFileExtensions": [
+    "js",
+    "json",
+    "ts"
+  ],
+  "rootDir": ".",
+  "testEnvironment": "node",
+  "testRegex": ".e2e-spec.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "@lib/common/(.*)": "<rootDir>/../libs/common/src/$1",
+    "@lib/common": "<rootDir>/../libs/common/src",
+    "@lib/config/(.*)": "<rootDir>/../libs/config/src/$1",
+    "@lib/config": "<rootDir>/../libs/config/src",
+    "@lib/utils/(.*)": "<rootDir>/../libs/utils/src/$1",
+    "@lib/utils": "<rootDir>/../libs/utils/src",
+    "@lib/ajv/(.*)": "<rootDir>/../libs/ajv/src/$1",
+    "@lib/ajv": "<rootDir>/../libs/ajv/src",
+    "@lib/core/(.*)": "<rootDir>/../libs/core/src/$1",
+    "@lib/core": "<rootDir>/../libs/core/src",
+    "@lib/providers/(.*)": "<rootDir>/../libs/providers/src/$1",
+    "@lib/providers": "<rootDir>/../libs/providers/src",
+    "@lib/db/(.*)": "<rootDir>/../libs/db/src/$1",
+    "@lib/db": "<rootDir>/../libs/db/src"
+  }
+}

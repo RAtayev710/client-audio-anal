@@ -1,0 +1,166 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Client {
+  id String @id
+
+  name             Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
+  sex              Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
+  age              Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
+  jobTitle         Json @default(dbgenerated("'{}'::jsonb")) @map("job_title") @db.JsonB
+  placeOfWork      Json @default(dbgenerated("'{}'::jsonb")) @map("place_of_work") @db.JsonB
+  havingChildren   Json @default(dbgenerated("'{}'::jsonb")) @map("having_children") @db.JsonB
+  placeOfResidence Json @default(dbgenerated("'{}'::jsonb")) @map("place_of_residence") @db.JsonB
+  hobbies          Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
+  maritalStatus    Json @default(dbgenerated("'{}'::jsonb")) @map("marital_status") @db.JsonB
+  sphereOfActivity Json @default(dbgenerated("'{}'::jsonb")) @map("sphere_of_activity") @db.JsonB
+
+  relatives ClientRelative[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("clients")
+}
+
+model ClientRelative {
+  id String @id @default(uuid())
+
+  name            String
+  age             String
+  placeOfWork     String
+  degreeOfKinship String @map("degree_of_kinship")
+
+  clientId String @map("client_id")
+  client   Client @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("client_relatives")
+}
+
+model Call {
+  id String @id @default(uuid())
+
+  orgId       String @map("org_id")
+  clientPhone String @map("client_phone")
+
+  clientInfo         CallClientInfo?
+  satisfactionInfo   CallSatisfactionInfo?
+  clientInsightsInfo CallClientInsightsInfo?
+
+  category     String
+  datetime     DateTime
+  duration     Int
+  direction    Int
+  managerPhone String   @map("manager_phone")
+  managerName  String   @map("manager_name")
+
+  essence                 String?
+  initiatorOfTopics       String? @map("initiator_of_topics")
+  identifiedProblem       String? @map("identified_problem")
+  conversationDriver      String? @map("conversation_driver")
+  problemResolutionStatus String? @map("problem_resolution_status")
+  nextContactDate         String? @map("next_contact_date")
+  clientInterest          String? @map("client_interest")
+
+  managerTask String? @map("manager_task")
+
+  @@index(clientPhone)
+  @@index(orgId)
+  @@index([orgId, clientPhone])
+  @@map("calls")
+}
+
+model CallClientInfo {
+  id String @id @default(uuid())
+
+  callId String @unique @map("call_id")
+  call   Call   @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  name                String?
+  sex                 String?
+  age                 String?
+  jobTitle            String? @map("job_title")
+  placeOfWork         String? @map("place_of_work")
+  havingChildren      String? @map("having_children")
+  placeOfResidence    String? @map("place_of_residence")
+  hobbies             String?
+  maritalStatus       String? @map("marital_status")
+  sphereOfActivity    String? @map("sphere_of_activity")
+  ageAssessmentReason String? @map("age_assessment_reason")
+
+  relativeInfo CallClientRelativeInfo?
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("call_client_infos")
+}
+
+model CallClientRelativeInfo {
+  id String @id @default(uuid())
+
+  clientId String         @unique @map("client_id")
+  client   CallClientInfo @relation(fields: [clientId], references: [id], onDelete: Cascade)
+
+  name            String?
+  age             String?
+  placeOfWork     String? @map("place_of_work")
+  degreeOfKinship String? @map("degree_of_kinship")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("call_client_relative_infos")
+}
+
+model CallSatisfactionInfo {
+  id String @id @default(uuid())
+
+  callId String @unique @map("call_id")
+  call   Call   @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  recommendations     String[]
+  initialRatingScore  String   @map("initial_rating_score")
+  initialRatingReason String   @map("initial_rating_reason")
+  finalRatingScore    String   @map("final_rating_score")
+  finalRatingReason   String   @map("final_rating_reason")
+  comparison          String
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("call_satisfaction_infos")
+}
+
+model CallClientInsightsInfo {
+  id String @id @default(uuid())
+
+  callId String @unique @map("call_id")
+  call   Call   @relation(fields: [callId], references: [id], onDelete: Cascade)
+
+  painCategories String[] @map("pain_categories")
+  painMentions   String   @map("pain_mentions")
+  painIntensity  String   @map("pain_intensity")
+
+  interestsCategories String[] @map("interests_categories")
+  interestsMentions   String   @map("interests_mentions")
+  interestsIntensity  String   @map("interests_intensity")
+
+  needsCategories String[] @map("needs_categories")
+  needsMentions   String   @map("needs_mentions")
+  needsIntensity  String   @map("needs_intensity")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("call_client_insights_infos")
+}
