@@ -13,6 +13,8 @@ import { DbModule } from '@lib/db/db.module';
 import { StoreKey } from '@lib/providers/cls/cls.enums';
 import { ClsModule } from '@lib/providers/cls/cls.module';
 
+import { AuthTokenModule } from './modules/auth-token/auth-token.module';
+
 @Module({
   imports: [
     ClsModule,
@@ -48,6 +50,7 @@ import { ClsModule } from '@lib/providers/cls/cls.module';
         handleRejections: true,
       }),
     }),
+    AuthTokenModule,
   ],
 })
 export class AppModule {}

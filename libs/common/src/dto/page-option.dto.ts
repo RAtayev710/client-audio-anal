@@ -1,28 +1,37 @@
-import { Exclude, Expose } from 'class-transformer';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+
+import { LIMIT_ITEM, MAX_LIMIT_ITEM } from '../constants';
 
 /**
  * Class representing request DTO for pagination.
  */
-@Exclude()
 export class PageOptionDto implements PaginationCtx {
-  /**
-   * The page number.
-   * @type {number}
-   */
-  @Expose()
-  page: number;
-
-  /**
-   * The number of items to skip.
-   * @type {number}
-   */
-  @Expose()
-  skip?: number;
-
   /**
    * The maximum number of items to return per page.
    * @type {number}
    */
-  @Expose()
-  take?: number;
+  @ApiPropertyOptional({
+    minimum: 1,
+    maximum: MAX_LIMIT_ITEM,
+    default: LIMIT_ITEM,
+  })
+  readonly limit: number = LIMIT_ITEM;
+
+  /**
+   * The page number.
+   * @type {number}
+   */
+  @ApiPropertyOptional({
+    minimum: 1,
+    default: 1,
+  })
+  readonly page: number = 1;
+
+  /**
+   * Calculates the offset based on the page and limit.
+   * @returns {number} - The calculated offset.
+   */
+  get offset(): number {
+    return ((this.page || 1) - 1) * (this.limit || LIMIT_ITEM);
+  }
 }

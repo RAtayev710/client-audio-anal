@@ -48,7 +48,9 @@ export class AuthGuard implements CanActivate {
     if (!orgId) return false;
 
     try {
-      const dbToken = await this.prisma.token.findFirst({ where: { token } });
+      const dbToken = await this.prisma.authToken.findFirst({
+        where: { token },
+      });
 
       if (!dbToken) return false;
 

@@ -166,14 +166,15 @@ model CallClientInsightsInfo {
   @@map("call_client_insights_infos")
 }
 
-model Token {
+model AuthToken {
   id String @id @default(uuid())
 
+  name  String
   token String
   orgs  Int[]
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  @@map("tokens")
+  @@map("auth_tokens")
 }

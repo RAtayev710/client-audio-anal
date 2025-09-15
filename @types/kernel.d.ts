@@ -16,7 +16,7 @@ type DeepPartial<T> = T extends object
   : T;
 
 type PaginationCtx = {
+  limit: number;
+  offset: number;
   page: number;
-  skip?: number;
-  take?: number;
 };

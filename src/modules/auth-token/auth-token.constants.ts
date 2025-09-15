@@ -1,0 +1,1 @@
+export const MAX_AUTH_TOKEN_NAME_LENGTH = 256;
