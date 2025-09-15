@@ -14,6 +14,7 @@ import { StoreKey } from '@lib/providers/cls/cls.enums';
 import { ClsModule } from '@lib/providers/cls/cls.module';
 
 import { AuthTokenModule } from './modules/auth-token/auth-token.module';
+import { CallModule } from './modules/call/call.module';
 
 @Module({
   imports: [
@@ -51,6 +52,7 @@ import { AuthTokenModule } from './modules/auth-token/auth-token.module';
       }),
     }),
     AuthTokenModule,
+    CallModule,
   ],
 })
 export class AppModule {}

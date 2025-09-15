@@ -59,9 +59,9 @@ model Call {
 
   datetime     DateTime
   duration     Int
-  direction    Int
-  managerPhone String   @map("manager_phone")
-  managerName  String   @map("manager_name")
+  direction    String
+  managerPhone String?  @map("manager_phone")
+  managerName  String?  @map("manager_name")
 
   essence                 String?
   initiatorOfTopics       String? @map("initiator_of_topics")
@@ -70,8 +70,7 @@ model Call {
   problemResolutionStatus String? @map("problem_resolution_status")
   nextContactDate         String? @map("next_contact_date")
   clientInterest          String? @map("client_interest")
-
-  managerTask String? @map("manager_task")
+  managerTask             String? @map("manager_task")
 
   @@index(callId)
   @@index(clientPhone)
