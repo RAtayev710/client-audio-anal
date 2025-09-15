@@ -8,3 +8,6 @@ export const DATE_FORMAT = 'DD.MM.YYYY';
 export const DATE_TIME_FORMAT = 'DD.MM.YYYY HH:mm:ss';
 
 export const DB_STR_SPLIT_SYMBOL = ', ';
+
+export const X_MASTER_TOKEN_HEADER = 'x-master-token';
+export const X_ORG_ID_HEADER = 'x-org-id';

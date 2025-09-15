@@ -23,6 +23,11 @@ export const AppConfig = registerAs(ConfigToken.APP, () => {
       value: process.env.APP_HOST,
       joi: JoiUtil.schema.string().allow(null, '').default('127.0.0.1'),
     },
+    // The master token of application fetched from environment variables.
+    masterToken: {
+      value: process.env.APP_MASTER_TOKEN,
+      joi: JoiUtil.schema.string().required(),
+    },
     // The name of application fetched from environment variables.
     name: {
       value: process.env.APP_NAME,

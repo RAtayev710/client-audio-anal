@@ -1,5 +1,4 @@
 export enum StoreKey {
+  AUTH = 'AUTH',
   IP = 'IP',
-  OWNER = 'OWNER',
-  USER = 'USER',
 }

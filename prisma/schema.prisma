@@ -49,14 +49,14 @@ model ClientRelative {
 model Call {
   id String @id @default(uuid())
 
-  orgId       String @map("org_id")
+  callId      Int    @map("call_id")
+  orgId       Int    @map("org_id")
   clientPhone String @map("client_phone")
 
   clientInfo         CallClientInfo?
   satisfactionInfo   CallSatisfactionInfo?
   clientInsightsInfo CallClientInsightsInfo?
 
-  category     String
   datetime     DateTime
   duration     Int
   direction    Int
@@ -73,6 +73,7 @@ model Call {
 
   managerTask String? @map("manager_task")
 
+  @@index(callId)
   @@index(clientPhone)
   @@index(orgId)
   @@index([orgId, clientPhone])
@@ -163,4 +164,16 @@ model CallClientInsightsInfo {
   updatedAt DateTime @updatedAt @map("updated_at")
 
   @@map("call_client_insights_infos")
+}
+
+model Token {
+  id String @id @default(uuid())
+
+  token String
+  orgs  Int[]
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("tokens")
 }
