@@ -4,35 +4,35 @@ import { Exclude, Expose, Type } from 'class-transformer';
 @Exclude()
 export class CreateCallRequest {
   @ApiProperty({ name: 'call_info_id' })
-  @Expose()
+  @Expose({ name: 'call_info_id' })
   callId: number;
 
   @ApiProperty({ name: 'client_phone' })
-  @Expose()
+  @Expose({ name: 'client_phone' })
   clientPhone: string;
 
   @ApiProperty({ name: 'call_date' })
-  @Expose()
+  @Expose({ name: 'call_date' })
   @Type(() => Date)
   datetime: Date;
 
   @ApiProperty({ name: 'call_type' })
-  @Expose()
+  @Expose({ name: 'call_type' })
   direction: string;
 
   @ApiProperty({ name: 'call_duration' })
-  @Expose()
+  @Expose({ name: 'call_duration' })
   duration: number;
 
   @ApiPropertyOptional({ name: 'manager_name' })
-  @Expose()
+  @Expose({ name: 'manager_name' })
   managerName?: string;
 
   @ApiPropertyOptional({ name: 'manager_phone' })
-  @Expose()
+  @Expose({ name: 'manager_phone' })
   managerPhone?: string;
 
   @ApiProperty({ name: 'org_id' })
-  @Expose()
+  @Expose({ name: 'org_id' })
   orgId: number;
 }

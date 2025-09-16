@@ -8,7 +8,7 @@ import { MappingUtil } from '@lib/utils';
 
 import { CallInject } from '../call.inject';
 import { callSchema } from '../call.schema';
-import { CallDto, CreateCallRequest } from '../dto';
+import { CallDto, CreateCallRequest, UploadCallInfoRequest } from '../dto';
 import { ICallService } from '../interfaces';
 
 /**
@@ -41,9 +41,28 @@ export class CallController {
   async create(
     @AjvBody(callSchema.create()) body: CreateCallRequest,
   ): Promise<{ data: Call }> {
+    console.log(MappingUtil.toDto(body, { cls: CreateCallRequest }));
+
     return {
       data: await this.service.create(
         MappingUtil.toDto(body, { cls: CreateCallRequest }),
+      ),
+    };
+  }
+
+  @MasterAuth()
+  @Post('info')
+  @ApiOkResponse({ type: CallDto })
+  @ApiOperation({ summary: 'Загрузить информацию по звонку.' })
+  @ApiBody({ type: UploadCallInfoRequest })
+  async uploadInfo(
+    @AjvBody(callSchema.uploadInfo()) body: UploadCallInfoRequest,
+  ): Promise<{ data: Call }> {
+    console.log(MappingUtil.toDto(body, { cls: UploadCallInfoRequest }));
+
+    return {
+      data: await this.service.uploadInfo(
+        MappingUtil.toDto(body, { cls: UploadCallInfoRequest }),
       ),
     };
   }

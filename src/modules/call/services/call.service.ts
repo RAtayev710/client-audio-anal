@@ -5,6 +5,7 @@ import { BaseCRUDService } from '@lib/common/services';
 import { DbInject } from '@lib/db/db.inject';
 import { PrismaService } from '@lib/db/services';
 
+import { UploadCallInfoRequest } from '../dto';
 import { ICallService } from '../interfaces';
 import { CallCtx, CreateCall, UpdateCall } from '../types';
 
@@ -30,6 +31,18 @@ export class CallService
    */
   constructor(@Inject(DbInject.PRISMA_SERVICE) prisma: PrismaService) {
     super(Prisma.ModelName.Call, prisma);
+  }
+
+  async uploadInfo(data: UploadCallInfoRequest): Promise<Call> {
+    try {
+      const call = await this.prisma.call.findFirstOrThrow({
+        where: { callId: data.callId },
+      });
+
+      return call;
+    } catch (err: unknown) {
+      this.handleError(err, 'uploadInfo');
+    }
   }
 
   /**
