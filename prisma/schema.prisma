@@ -148,16 +148,16 @@ model CallClientInsightsInfo {
   call   Call   @relation(fields: [callId], references: [id], onDelete: Cascade)
 
   painCategories String[] @map("pain_categories")
-  painMentions   String   @map("pain_mentions")
-  painIntensity  String   @map("pain_intensity")
+  painMentions   Int      @map("pain_mentions")
+  painIntensity  Int      @map("pain_intensity")
 
   interestsCategories String[] @map("interests_categories")
-  interestsMentions   String   @map("interests_mentions")
-  interestsIntensity  String   @map("interests_intensity")
+  interestsMentions   Int      @map("interests_mentions")
+  interestsIntensity  Int      @map("interests_intensity")
 
   needsCategories String[] @map("needs_categories")
-  needsMentions   String   @map("needs_mentions")
-  needsIntensity  String   @map("needs_intensity")
+  needsMentions   Int      @map("needs_mentions")
+  needsIntensity  Int      @map("needs_intensity")
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")

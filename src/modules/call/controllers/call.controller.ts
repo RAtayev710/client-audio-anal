@@ -41,8 +41,6 @@ export class CallController {
   async create(
     @AjvBody(callSchema.create()) body: CreateCallRequest,
   ): Promise<{ data: Call }> {
-    console.log(MappingUtil.toDto(body, { cls: CreateCallRequest }));
-
     return {
       data: await this.service.create(
         MappingUtil.toDto(body, { cls: CreateCallRequest }),
@@ -58,8 +56,6 @@ export class CallController {
   async uploadInfo(
     @AjvBody(callSchema.uploadInfo()) body: UploadCallInfoRequest,
   ): Promise<{ data: Call }> {
-    console.log(MappingUtil.toDto(body, { cls: UploadCallInfoRequest }));
-
     return {
       data: await this.service.uploadInfo(
         MappingUtil.toDto(body, { cls: UploadCallInfoRequest }),
