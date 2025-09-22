@@ -9,6 +9,8 @@ type DateInfo = {
   updatedAt: Date | null;
 };
 
+type QueryPayload<T = any, S = any> = Partial<{ filter: T; sort: S }>;
+
 type DeepPartial<T> = T extends object
   ? {
       [P in keyof T]?: DeepPartial<T[P]>;

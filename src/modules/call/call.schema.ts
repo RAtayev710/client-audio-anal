@@ -1,4 +1,5 @@
 import { JsonSchema } from '@lib/ajv/types';
+import { PAGE_UNLIMIT_ITEM_SCHEMA } from '@lib/common/schemas';
 import { SchemaCore } from '@lib/core';
 
 /**
@@ -40,6 +41,29 @@ class CallSchema extends SchemaCore {
         'call_duration',
         'org_id',
       ],
+    };
+  }
+
+  getList(): JsonSchema {
+    return {
+      $id: this.getIdKey('getList'),
+      type: 'object',
+      // additionalProperties: false,
+      properties: {
+        ...PAGE_UNLIMIT_ITEM_SCHEMA,
+        // filter: {
+        //   type: 'object',
+        //   additionalProperties: false,
+        //   properties: {},
+        // },
+        sort: {
+          type: 'object',
+          // additionalProperties: false,
+          properties: {
+            ...this.getSortBy('createdAt'),
+          },
+        },
+      },
     };
   }
 

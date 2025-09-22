@@ -21,7 +21,7 @@ import {
 import { AuthToken } from '@prisma/client';
 
 import { AjvBody, AjvParams } from '@lib/ajv/decorators';
-import { Auth, Dto, PageQuery } from '@lib/common/decorators';
+import { Dto, MasterAuth, PageQuery } from '@lib/common/decorators';
 import { PageOptionDto } from '@lib/common/dto';
 
 import { AuthTokenInject } from '../auth-token.inject';
@@ -56,7 +56,7 @@ export class AuthTokenController {
    * @param {CreateAuthTokenRequest} body - The request body to create the auth token.
    * @returns {Promise<{data: AuthToken}>}
    */
-  @Auth()
+  @MasterAuth()
   @Post()
   @ApiOkResponse({ type: AuthTokenDto })
   @ApiOperation({ summary: 'Создать токен.' })
@@ -72,7 +72,7 @@ export class AuthTokenController {
    * @param {IdObject} idObject - The id object containing ID of the auth token to delete.
    * @returns {Promise<void>}
    */
-  @Auth()
+  @MasterAuth()
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   @ApiNotFoundResponse({ description: 'Токен с указанным ID не найден.' })
@@ -90,7 +90,7 @@ export class AuthTokenController {
    * @param {PageOptionDto} pagination - The object containing information about the pagination.
    * @returns {Promise<{data: AuthToken[]; itemCount: number; pagination: PageOptionDto}>}
    */
-  @Auth()
+  @MasterAuth()
   @Get()
   @ApiOkResponse({ type: GetAuthTokenListResponse })
   @ApiQuery({ type: GetAuthTokenListRequest })
@@ -113,7 +113,7 @@ export class AuthTokenController {
    * @param {IdObject} idObject - The id object containing ID of the auth token to revoke.
    * @returns {Promise<void>}
    */
-  @Auth()
+  @MasterAuth()
   @HttpCode(HttpStatus.NO_CONTENT)
   @Patch(':id/revoke')
   @ApiNotFoundResponse({ description: 'Токен с указанным ID не найден.' })

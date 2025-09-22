@@ -100,12 +100,12 @@ export class CallService
         });
 
         let client = await transaction.client.findFirst({
-          where: { id: call.clientPhone },
+          where: { phoneNumber: call.clientPhone, orgId: call.orgId },
         });
 
         if (!client)
           client = await transaction.client.create({
-            data: { id: call.clientPhone },
+            data: { phoneNumber: call.clientPhone, orgId: call.orgId },
           });
 
         await this.incrementClientFields(
@@ -240,6 +240,8 @@ export class CallService
         options.orderBy = Object.entries(ctx.orderBy).map(([el, value]) => ({
           [el]: value,
         }));
+
+      if (ctx.include) options.include = ctx.include;
     }
 
     return options;

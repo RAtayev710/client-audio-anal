@@ -7,6 +7,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
+import { parse } from 'qs';
 
 import { AjvValidationPipe } from '@lib/ajv/ajv-validation.pipe';
 import { JsonSchema } from '@lib/ajv/types';
@@ -23,7 +24,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
-    new FastifyAdapter(),
+    new FastifyAdapter({ querystringParser: (str) => parse(str) }),
   );
 
   const appConfig: ConfigType<typeof AppConfig> = app.get(AppConfig.KEY);
@@ -45,6 +46,10 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Client Audio Anal')
     .setVersion('1.0')
+    .addBearerAuth(
+      { type: 'http', scheme: 'bearer', bearerFormat: 'Opaque' },
+      'token',
+    )
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

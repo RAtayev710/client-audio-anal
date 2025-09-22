@@ -8,7 +8,10 @@ datasource db {
 }
 
 model Client {
-  id String @id
+  id String @id @default(uuid())
+
+  orgId       Int    @map("org_id")
+  phoneNumber String
 
   name             Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
   sex              Json @default(dbgenerated("'{}'::jsonb")) @db.JsonB
@@ -26,6 +29,7 @@ model Client {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  @@unique([orgId, phoneNumber])
   @@map("clients")
 }
 

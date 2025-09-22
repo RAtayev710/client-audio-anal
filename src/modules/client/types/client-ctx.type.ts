@@ -1,10 +1,10 @@
 import { Prisma, PrismaClient } from '@prisma/client';
 
-export type CallCtx = Pick<
-  Prisma.CallFindFirstArgs,
+export type ClientCtx = Pick<
+  Prisma.ClientFindFirstArgs,
   'include' | 'skip' | 'take'
 > & {
-  orderBy?: Prisma.CallOrderByWithRelationInput;
+  orderBy?: Prisma.ClientOrderByWithRelationInput;
   skipAbilityCheck?: boolean;
   transaction?: PrismaClient;
 };

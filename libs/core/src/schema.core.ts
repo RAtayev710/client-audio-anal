@@ -1,5 +1,6 @@
 import { JsonSchemaProp, SchemaOption } from '@lib/ajv/types';
 import { BIG_INT } from '@lib/common/constants';
+import { OrderBy } from '@lib/common/enums';
 
 /**
  * Class representing a validation schema core.
@@ -239,6 +240,22 @@ export class SchemaCore {
         },
       },
     } as unknown as JsonSchemaProp;
+  }
+
+  /**
+   * Returns a JSON schema for a sort by field.
+   * @protected
+   * @param {string} key - The key for the schema.
+   * @returns {JsonSchemaProp} The JSON schema property.
+   */
+  protected getSortBy(key: string): JsonSchemaProp {
+    return {
+      [key]: {
+        type: 'string',
+        enum: Object.values(OrderBy),
+        transform: ['toLowerCase'],
+      },
+    };
   }
 
   /**

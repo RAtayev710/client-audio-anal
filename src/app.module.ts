@@ -15,6 +15,7 @@ import { ClsModule } from '@lib/providers/cls/cls.module';
 
 import { AuthTokenModule } from './modules/auth-token/auth-token.module';
 import { CallModule } from './modules/call/call.module';
+import { ClientModule } from './modules/client/client.module';
 
 @Module({
   imports: [
@@ -53,6 +54,7 @@ import { CallModule } from './modules/call/call.module';
     }),
     AuthTokenModule,
     CallModule,
+    ClientModule,
   ],
 })
 export class AppModule {}
