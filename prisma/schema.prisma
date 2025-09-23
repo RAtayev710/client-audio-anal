@@ -53,7 +53,7 @@ model ClientRelative {
 model Call {
   id String @id @default(uuid())
 
-  callId      Int    @map("call_id")
+  callId      Int    @unique @map("call_id")
   orgId       Int    @map("org_id")
   clientPhone String @map("client_phone")
 
@@ -75,6 +75,8 @@ model Call {
   nextContactDate         String? @map("next_contact_date")
   clientInterest          String? @map("client_interest")
   managerTask             String? @map("manager_task")
+
+  transcribationFilePath String? @map("transcribation_file_path")
 
   @@index(callId)
   @@index(clientPhone)

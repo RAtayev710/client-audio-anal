@@ -1,0 +1,3 @@
+export enum CallExceptionName {
+  TRANSCRIBATION_UPLOAD_ERROR = 'TRANSCRIBATION_UPLOAD_ERROR',
+}

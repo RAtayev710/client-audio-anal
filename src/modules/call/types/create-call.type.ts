@@ -10,4 +10,4 @@ export type CreateCall = Pick<
   | 'managerName'
   | 'managerPhone'
   | 'orgId'
->;
+> & { transcribation?: object };

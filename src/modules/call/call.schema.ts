@@ -32,6 +32,7 @@ class CallSchema extends SchemaCore {
         ...this.getString('manager_name', { isOptional: true }),
         ...this.getString('manager_phone', { isOptional: true }),
         ...this.getInteger('org_id'),
+        transcribation: { type: 'object' },
       },
       required: [
         'call_info_id',

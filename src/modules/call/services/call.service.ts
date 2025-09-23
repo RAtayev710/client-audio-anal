@@ -1,10 +1,16 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { Call, Prisma, PrismaClient } from '@prisma/client';
 
+import { IBaseStorageService } from '@lib/common/interfaces';
 import { BaseCRUDService } from '@lib/common/services';
 import { DbInject } from '@lib/db/db.inject';
 import { PrismaService } from '@lib/db/services';
+import { S3Inject } from '@lib/providers/s3/s3.inject';
+import { ExceptionUtil, HashUtil } from '@lib/utils';
 
+import { TRANSCRIBATIONS_DIR_NAME } from '../call.constants';
+import { CallExceptionName } from '../call.enums';
+import { callExceptions } from '../call.exceptions';
 import { UploadCallInfoRequest } from '../dto';
 import { ICallService } from '../interfaces';
 import { CallCtx, CreateCall, UpdateCall } from '../types';
@@ -29,7 +35,10 @@ export class CallService
    * @constructor
    * @param {PrismaService} prisma - The prisma service to work with database.
    */
-  constructor(@Inject(DbInject.PRISMA_SERVICE) prisma: PrismaService) {
+  constructor(
+    @Inject(DbInject.PRISMA_SERVICE) prisma: PrismaService,
+    @Inject(S3Inject.SERVICE) private readonly s3Service: IBaseStorageService,
+  ) {
     super(Prisma.ModelName.Call, prisma);
   }
 
@@ -153,8 +162,33 @@ export class CallService
    * @param {CreateCall} data - The data to create the entity.
    * @returns {Promise<Call>} The created entity.
    */
-  protected createOperation(data: CreateCall): Promise<Call> {
-    return this.prisma.call.create({ data });
+  protected async createOperation({
+    transcribation,
+    ...data
+  }: CreateCall): Promise<Call> {
+    const createData: Prisma.CallCreateInput = { ...data };
+
+    if (transcribation) {
+      const filePath = `${HashUtil.generateRandomString(16)}-${data.callId}.json`;
+
+      const { status } = await this.s3Service.upload(
+        Buffer.from(JSON.stringify(transcribation)),
+        {
+          directoryName: TRANSCRIBATIONS_DIR_NAME,
+          filePath: filePath,
+          mimeType: 'application/json',
+        },
+      );
+
+      if (!status)
+        ExceptionUtil.throwHttpException(
+          callExceptions[CallExceptionName.TRANSCRIBATION_UPLOAD_ERROR],
+        );
+
+      createData.transcribationFilePath = `${TRANSCRIBATIONS_DIR_NAME}/${filePath}`;
+    }
+
+    return this.prisma.call.create({ data: createData });
   }
 
   /**

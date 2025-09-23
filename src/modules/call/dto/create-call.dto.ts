@@ -35,4 +35,8 @@ export class CreateCallRequest {
   @ApiProperty({ name: 'org_id' })
   @Expose({ name: 'org_id' })
   orgId: number;
+
+  @ApiPropertyOptional()
+  @Expose()
+  transcribation?: object;
 }
