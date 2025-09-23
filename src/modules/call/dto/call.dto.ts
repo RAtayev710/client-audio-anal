@@ -92,4 +92,8 @@ export class CallDto implements DeepPartial<Call> {
   @Expose()
   @Type(() => CallSatisfactionInfoDto)
   satisfactionInfo: CallSatisfactionInfoDto;
+
+  @ApiPropertyOptional()
+  @Expose()
+  transcribationFilePath?: string;
 }
