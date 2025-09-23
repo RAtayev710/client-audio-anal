@@ -1,5 +1,6 @@
 export * from './date';
 export * from './exception';
+export * from './file';
 export * from './hash';
 export * from './joi';
 export * from './log';

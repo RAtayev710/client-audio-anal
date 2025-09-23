@@ -2,7 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Call } from '@prisma/client';
 import { Exclude, Expose, Type } from 'class-transformer';
 
-import { ApiIdProperty } from '@lib/common/decorators';
+import { ApiIdProperty, FileUrl } from '@lib/common/decorators';
 
 import { CallClientInfoDto } from './call-client-info.dto';
 import { CallClientInsightsInfoDto } from './call-client-insights-info.dto';
@@ -96,4 +96,9 @@ export class CallDto implements DeepPartial<Call> {
   @ApiPropertyOptional()
   @Expose()
   transcribationFilePath?: string;
+
+  @ApiProperty({ type: String, nullable: true })
+  @Expose()
+  @FileUrl('transcribationFilePath')
+  transcribationFileUrl: string | null;
 }
