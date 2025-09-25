@@ -1,0 +1,13 @@
+.vscode
+node_modules
+.git
+.gitignore
+*.md
+dist
+.commitlintrc.json
+.editorconfig
+.env*
+.eslintrc.js
+.prettierrc
+docs
+test
